@@ -8,8 +8,8 @@ var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-// routes
-app.use('/', require('./routes/index'))
+const indexController = require('./controllers/index')
+app.use('/', indexController)
 
 // start up server
 const PORT = process.env.PORT || 3000

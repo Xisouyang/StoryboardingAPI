@@ -1,8 +1,5 @@
-const express = require('express');
-const router = express.Router();
-
-router.get('/', (req, res) => {
+const rootRoute = (req, res) => {
   res.render('home', {msg: 'CustomAPI'});
-})
+}
 
-module.exports = router;
+module.exports = { rootRoute }
