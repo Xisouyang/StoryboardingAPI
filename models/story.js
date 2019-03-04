@@ -7,8 +7,8 @@ const CommentSchema = new Schema({
     resolution: { type: String, required: true },
     character: { type: String, required: true },
     setting: { type: String, required: true },
-    author : { type: Schema.Types.ObjectId, ref: "User", required: true },
-    comments: [{type: Schema.Types.ObjectId, ref: "Comment"}]
+    // author : { type: Schema.Types.ObjectId, ref: "User", required: true },
+    // comments: [{type: Schema.Types.ObjectId, ref: "Comment"}]
 });
 
 module.exports = mongoose.model("Story", CommentSchema);

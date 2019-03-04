@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { rootRoute } = require('../routes/index')
+const { postNewStory } = require('../routes/story')
 
-router.get('/', rootRoute)
+router.post('/new', postNewStory)
 
 module.exports = router
