@@ -9,7 +9,6 @@ const StorySchema = new Schema({
     character: { type: String, required: true },
     setting: { type: String, required: true },
     // author : { type: Schema.Types.ObjectId, ref: "User", required: true },
-    commentId: [{type: Schema.Types.ObjectId, ref: "Comment"}]
 });
 
 module.exports = mongoose.model("Story", StorySchema);
