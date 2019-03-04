@@ -23,7 +23,23 @@ const getAllStories = (req, res) => {
   })
 }
 
+const editStory = (req, res) => {
+  /*
+    Find specific story in db through its id,
+    update then send back to db
+   */
+  Story.findOneAndUpdate({ _id: req.params.id }, req.body)
+    .then(story => {
+      console.log(story)
+      res.redirect(`/${req.params.id}`)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+}
+
 module.exports = {
    postNewStory,
-   getAllStories
+   getAllStories,
+   editStory
 }
