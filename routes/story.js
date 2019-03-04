@@ -1,6 +1,6 @@
 const Story = require('../models/story')
 
-const postNewStory = (req, res) => {
+const postStory = (req, res) => {
   /*
     instantiate story model then save to db
    */
@@ -14,13 +14,31 @@ const postNewStory = (req, res) => {
 const getAllStories = (req, res) => {
   /*
     Find all items in db using the Story schema
-    then output it to terminal and screen
+    then output it to terminal and client screen
    */
   Story.find()
   .then(stories => {
     console.log(stories)
     res.send(stories)
   })
+  .catch(err => {
+    console.log(err.message)
+  })
+}
+
+const getStory = (req, res) => {
+  /*
+    Find specifc item in db using id
+    then output to terminal and client screen
+   */
+   Story.findById({ _id: req.params.id })
+    .then(story => {
+      console.log(story)
+      res.send(story)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
 }
 
 const editStory = (req, res) => {
@@ -38,8 +56,24 @@ const editStory = (req, res) => {
     })
 }
 
+const deleteStory = (req, res) => {
+  /*
+    Find specific story in db through id
+    then delete it
+   */
+   Story.findOneAndDelete({ _id: req.params.id })
+     .then(story => {
+       res.redirect(`/`)
+     })
+     .catch(err => {
+       console.log(err.message)
+     })
+}
+
 module.exports = {
-   postNewStory,
+   postStory,
    getAllStories,
-   editStory
+   getStory,
+   editStory,
+   deleteStory
 }
