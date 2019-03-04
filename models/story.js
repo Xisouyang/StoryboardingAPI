@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
+    genre: { type: String, required: true},
     plot: { type: String, required: true },
     conflict: { type: String, required: true },
     resolution: { type: String, required: true },

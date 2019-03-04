@@ -1,12 +1,29 @@
 const Story = require('../models/story')
 
 const postNewStory = (req, res) => {
+  /*
+    instantiate story model then save to db
+   */
   console.log(req.body)
-  const story = new Story(req.body); // instantiate story model
-  story.save((err, post) => { // save to db
-    // return res.redirect(`/`); // redirect to root route
+  const story = new Story(req.body);
+  story.save((err, post) => {
     console.log("saved to db")
   })
 }
 
-module.exports = { postNewStory }
+const getAllStories = (req, res) => {
+  /*
+    Find all items in db using the Story schema
+    then output it to terminal and screen
+   */
+  Story.find()
+  .then(stories => {
+    console.log(stories)
+    res.send(stories)
+  })
+}
+
+module.exports = {
+   postNewStory,
+   getAllStories
+}
