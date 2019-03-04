@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const CommentSchema = new Schema({
+const StorySchema = new Schema({
     genre: { type: String, required: true},
     plot: { type: String, required: true },
     conflict: { type: String, required: true },
@@ -9,7 +9,7 @@ const CommentSchema = new Schema({
     character: { type: String, required: true },
     setting: { type: String, required: true },
     // author : { type: Schema.Types.ObjectId, ref: "User", required: true },
-    // comments: [{type: Schema.Types.ObjectId, ref: "Comment"}]
+    commentId: [{type: Schema.Types.ObjectId, ref: "Comment"}]
 });
 
-module.exports = mongoose.model("Story", CommentSchema);
+module.exports = mongoose.model("Story", StorySchema);
