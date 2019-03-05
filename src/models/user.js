@@ -8,8 +8,8 @@ const UserSchema = new Schema({
   password: { type: String, select: false },
   username: { type: String, required: true },
   email: { type: String, required: true },
-  // isAdmin: { type: Bool, required: false }
-  // stories : [{ type: Schema.Types.ObjectId, ref: "Story" }]
+  isAdmin: { type: Boolean },
+  stories : [{ type: Schema.Types.ObjectId, ref: "Story" }]
 });
 
 // Define the callback with a regular function to avoid problems with this

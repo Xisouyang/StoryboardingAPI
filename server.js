@@ -26,16 +26,16 @@ app.use(cookieParser());
 app.use(expressValidator());
 
 //set db
-require('./data/customAPI-db')
+require('./src/data/customAPI-db')
 
 // setup route controllers
-const indexRoute = require('./routes/index')
-const storyRoute = require('./routes/story')
-const authRoute = require('./routes/auth')
+const indexRoute = require('./src/routes/index')
+const storyRoute = require('./src/routes/story')
+const authRoute = require('./src/routes/auth')
 
 // use routes
 app.use('/', indexRoute)
-app.use('/stories', storyRoute)
+app.use('/users', storyRoute)
 app.use('/auth', authRoute)
 
 // start up server

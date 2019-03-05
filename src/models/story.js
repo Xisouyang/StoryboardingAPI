@@ -8,7 +8,7 @@ const StorySchema = new Schema({
     resolution: { type: String, required: true },
     character: { type: String, required: true },
     setting: { type: String, required: true },
-    // author : { type: Schema.Types.ObjectId, ref: "User", required: true },
+    author : { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 module.exports = mongoose.model("Story", StorySchema);
