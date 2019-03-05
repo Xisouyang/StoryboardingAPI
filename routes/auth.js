@@ -1,23 +1,12 @@
-const User = require('../models/user')
-const jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
 
-const signup = (req, res) => {
+const { signup } = require('../controllers/auth')
+const { logout } = require('../controllers/auth')
+const { login } = require('../controllers/auth')
 
-  // Create User
-    const user = new User(req.body);
+router.post('/sign-up', signup)
+router.post('/login', login)
+router.get('/logout', logout)
 
-    user
-      .save()
-      .then(user => {
-        var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
-        res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-        // res.redirect(`/`);
-        res.send("success")
-      })
-      .catch(err => {
-        console.log(err.message);
-        return res.status(400).send({ err: err });
-      });
-}
-
-module.exports = { signup }
+module.exports = router

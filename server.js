@@ -29,14 +29,14 @@ app.use(expressValidator());
 require('./data/customAPI-db')
 
 // setup route controllers
-const indexController = require('./controllers/index')
-const storyController = require('./controllers/story')
-const authController = require('./controllers/auth')
+const indexRoute = require('./routes/index')
+const storyRoute = require('./routes/story')
+const authRoute = require('./routes/auth')
 
 // use routes
-app.use('/', indexController)
-app.use('/stories', storyController)
-app.use('/auth', authController)
+app.use('/', indexRoute)
+app.use('/stories', storyRoute)
+app.use('/auth', authRoute)
 
 // start up server
 const PORT = process.env.PORT || 3000

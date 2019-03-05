@@ -1,5 +1,8 @@
-const rootRoute = (req, res) => {
-  res.render('home', {msg: 'CustomAPI'});
-}
+const express = require('express');
+const router = express.Router();
 
-module.exports = { rootRoute }
+const { rootRoute } = require('../controllers/index')
+
+router.get('/', rootRoute)
+
+module.exports = router
