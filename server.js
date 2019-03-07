@@ -33,13 +33,33 @@ const indexRoute = require('./src/routes/index')
 const storyRoute = require('./src/routes/story')
 const authRoute = require('./src/routes/auth')
 
+// check validity of token
+var checkAuth = (req, res, next) => {
+  console.log("Checking authentication");
+  if (typeof req.headers['authorization'] === "undefined" || req.headers['authorization'] === null) {
+    console.log(req.headers['authorization'])
+    req.user = null;
+    console.log("FAIL")
+  } else {
+    console.log("SUCCESS")
+    var token = req.headers['authorization'];
+    var decodedToken = jwt.decode(token, { complete: true }) || {};
+    req.user = decodedToken.payload;
+  }
+
+  next();
+};
+
 // use routes
+app.use(checkAuth);
+app.use('/auth', authRoute)
 app.use('/', indexRoute)
 app.use('/users', storyRoute)
-app.use('/auth', authRoute)
 
 // start up server
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   console.log("listening on port 3000")
 })
+
+module.exports = app

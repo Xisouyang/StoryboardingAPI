@@ -5,22 +5,33 @@ const signup = (req, res) => {
 
 // Create User
   const user = new User(req.body);
-  if (user.username == "admin") {
-    res.status(400).send("cannot create admin user")
-  }
-  user.isAdmin = false
 
-  user
-    .save()
-    .then(user => {
-      var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
-      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-      res.send("success")
+  if (user.username == "admin") {
+    return res.status(400).send("cannot create admin user")
+  }
+
+  User.findOne({ username: user.username })
+    .then(currentUser => {
+      if(currentUser !== null) {
+        return res.status(400).send("user already exists")
+      }
+       else {
+         user.isAdmin = false
+
+         user
+           .save()
+           .then(user => {
+             var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+             // res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+             res.json(token)
+             // res.send("success")
+           })
+           .catch(err => {
+             console.log(err.message);
+             return res.status(400).send({ err: err });
+           });
+         }
     })
-    .catch(err => {
-      console.log(err.message);
-      return res.status(400).send({ err: err });
-    });
 }
 
 const adminSignup = (req, res) => {
@@ -36,9 +47,7 @@ const adminSignup = (req, res) => {
         user.save()
           .then(user => {
             var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
-            res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-            res.send("success: admin created")
-            // res.redirect('/')
+            res.json(token)
           })
           .catch(err => {
             console.log(err.message);
@@ -51,9 +60,6 @@ const adminSignup = (req, res) => {
     .catch(err => {
       console.log(err.message);
     })
-
-  // Create User
-
 }
 
 const login = (req, res) => {
@@ -78,8 +84,9 @@ const login = (req, res) => {
           expiresIn: "60 days"
         });
         // Set a cookie and redirect to root
-        res.cookie("nToken", token, { maxAge: 900000, httpOnly: true });
-        res.redirect("/");
+        // res.cookie("nToken", token, { maxAge: 900000, httpOnly: true });
+        res.json(token)
+        // res.redirect("/");
       });
     })
     .catch(err => {
@@ -87,14 +94,14 @@ const login = (req, res) => {
     });
 }
 
-const logout = (req, res) => {
-res.clearCookie('nToken')
-res.redirect('/')
-}
+// const logout = (req, res) => {
+// res.clearCookie('nToken')
+// // res.redirect('/')
+// }
 
 module.exports = {
  signup,
  adminSignup,
- login,
- logout
+ login
+ // logout
 }
