@@ -13,7 +13,7 @@ These instructions will get help you make a call to the API to retrieve the info
 
 ## Authentication
 
-Use [Postman](https://www.getpostman.com/) to *Sign In* and *Log In* to the API
+Use [Postman](https://www.getpostman.com/) to *Sign Up* and *Log In* to the API
 
 **POST URl:** __https://storyboarding-api.herokuapp.com/api/auth/sign-up__
 
