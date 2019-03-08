@@ -34,34 +34,6 @@ const signup = (req, res) => {
     })
 }
 
-// const adminSignup = (req, res) => {
-//
-//   const adminUser = req.body;
-//
-//    User.findOne({ "username": "admin" })
-//     .then(user => {
-//       if (!user) {
-//         const user = new User(adminUser);
-//         user.isAdmin = true
-//
-//         user.save()
-//           .then(user => {
-//             var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
-//             res.json(token)
-//           })
-//           .catch(err => {
-//             console.log(err.message);
-//             return res.status(400).send({ err: err });
-//           })
-//       } else {
-//         return res.status(400).send("admin exists")
-//       }
-//     })
-//     .catch(err => {
-//       console.log(err.message);
-//     })
-// }
-
 const login = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;

@@ -24,6 +24,7 @@ const postUserStory = (req, res) => {
       .then(user => {
         user.stories.unshift( story._id )
         user.save()
+        res.status(200).send(story)
       })
   })
 }
@@ -52,7 +53,6 @@ const getUserStories = (req, res) => {
   const userId = req.params.userId;
   User.findById(userId).populate('stories')
     .then(user => {
-      console.log(user.stories);
       res.send(user.stories);
     })
     .catch(err => {
@@ -65,11 +65,23 @@ const getUserStory = (req, res) => {
     Find specifc item in db using id
     then output to terminal and client screen
    */
+   const userId = req.params.userId;
+   User.findById(userId)
+    .then(user => {
+      Story.findById({ _id: req.params.id})
+       .then(story => {
 
-   Story.findById({ _id: req.params.id })
-    .then(story => {
-      console.log(story);
-      res.send(story);
+         var storyId = JSON.stringify(story.author)
+         storyId = storyId.split('"').join('')
+
+         if (storyId !== userId) {
+           return res.status(400).send("invalid path for story")
+         }
+         res.send(story);
+       })
+       .catch(err => {
+         console.log(err.message);
+       })
     })
     .catch(err => {
       console.log(err.message);
@@ -123,7 +135,7 @@ const deleteUserStory = async(req, res) => {
        const story = await Story.findOneAndDelete({ _id: storyId })
        res.send('success: story deleted').status(200)
      } else {
-       return res.send('Permission denied').status(400)
+       return res.send('invalid user').status(400)
      }
 
    } catch(err) {
