@@ -55,7 +55,7 @@ var checkAuth = (req, res, next) => {
 app.use(checkAuth);
 app.use('/auth', authRoute)
 app.use('/', indexRoute)
-app.use('/users', storyRoute)
+app.use('/api/users', storyRoute)
 
 // start up server
 const PORT = process.env.PORT || 3000
