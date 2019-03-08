@@ -76,45 +76,59 @@ const getUserStory = (req, res) => {
     })
 }
 
-const editUserStory = (req, res) => {
+const editUserStory = async(req, res) => {
   /*
     Find specific story in db through its id,
     update then send back to db
    */
-  // if
-  console.log(req.params.id)
-  Story.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-    .then(story => {
-      console.log(story)
-      // res.redirect(`/${req.params.id}`)
-      res.send("success: updated story");
-    })
-    .catch(err => {
-      console.log(err.message);
-    })
+   try {
+     const userId = req.params.userId
+     const storyId = req.params.id
+
+     const admin = await User.findOne({ username: 'admin'});
+     var adminId = JSON.stringify(admin._id);
+     adminId = adminId.split('"').join('')
+
+     if (userId === adminId) {
+       const story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+       story.save()
+       return res.send(`The Story Updated`).status(200)
+     } else {
+       return res.send('invalid user').status(400)
+     }
+   } catch(err) {
+      return res.send('admin not found').status(500)
+   }
 }
 
-const deleteUserStory = (req, res) => {
+const deleteUserStory = async(req, res) => {
   /*
     Find specific story in db through id
     then delete it
    */
-   const storyId = req.params.id
-   const userId = req.params.userId
+   try {
+     const storyId = req.params.id
+     const userId = req.params.userId
 
-   User.findOne({ _id: userId })
-    .then(user => {
-      user.stories = user.stories.filter(keepTheseStories => { !storyId });
-      user.save();
-    })
+     const admin = await User.findOne({ username: 'admin'});
+     var adminId = JSON.stringify(admin._id);
+     adminId = adminId.split('"').join('')
 
-    Story.findOneAndDelete({ _id: storyId })
-      .then(() => {
-        res.send("success: story deleted");
-      })
-      .catch(err => {
-        console.log(err.message);
-      })
+     if(userId === adminId) {
+
+       const user = await User.findOne({ _id: userId })
+       user.stories = user.stories.filter(keepTheseStories => { !storyId })
+       user.save()
+
+       const story = await Story.findOneAndDelete({ _id: storyId })
+       res.send('success: story deleted').status(200)
+     } else {
+       return res.send('Permission denied').status(400)
+     }
+
+   } catch(err) {
+     return res.send('Admin not found').status(500)
+   }
 }
 
 module.exports = {

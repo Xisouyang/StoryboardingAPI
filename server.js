@@ -28,6 +28,8 @@ app.use(expressValidator());
 //set db
 require('./src/data/customAPI-db')
 
+require('./lib/admin')()
+
 // setup route controllers
 const indexRoute = require('./src/routes/index')
 const storyRoute = require('./src/routes/story')
@@ -46,7 +48,6 @@ var checkAuth = (req, res, next) => {
     var decodedToken = jwt.decode(token, { complete: true }) || {};
     req.user = decodedToken.payload;
   }
-
   next();
 };
 

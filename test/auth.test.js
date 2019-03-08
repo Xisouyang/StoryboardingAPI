@@ -33,16 +33,48 @@ describe('auth', function() {
             .then(() => {
               done()
             })
+            .catch(err => {
+              console.log(err.message)
+            })
         })
   })
 
-  // it("it should not let duplicate user be created", function(done) {
-  //
-  // })
-  //
-  // it("should not let admin user be created in regular signup route", function(done) {
-  //
-  // })
+  it("it should not let duplicate user be created", function(done) {
+    chai
+      .request(app)
+      .post('/auth/sign-up')
+      .send({
+        "username": "aGuy",
+        "email": "aGuy@gmail.com",
+        "password": "1234567"
+      }, { "username": "aGuy",
+        "email": "aGuy@gmail.com",
+        "password": "1234567"})
+      .end((err, res) => {
+        res.should.have.status(400)
+        User.findOneAndDelete({ 'username': 'aGuy' })
+          .then(() => {
+            done()
+          })
+          .catch(err => {
+            console.log(err.message)
+          })
+      })
+  })
+  it("should not let admin user be created in regular signup route", function(done) {
+    chai
+      .request(app)
+      .post('/auth/sign-up')
+      .send({
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "password": "1234567"
+      })
+      .end((end, res) => {
+        res.should.have.status(400)
+        done()
+      })
+  })
   //
   // it("should not let duplicate admin user be created", function(done) {
   //
@@ -56,7 +88,4 @@ describe('auth', function() {
   //
   // })
   //
-  // it("should logout user", function(done) {
-  //
-  // })
 })
