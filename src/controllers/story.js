@@ -37,7 +37,11 @@ const getAllStories = (req, res) => {
   Story.find()
   .then(stories => {
     console.log(stories)
-    res.send(stories)
+
+    const returnStories = stories.map((story) => {
+      return {id: story.id, genre: story.genre, plot: story.plot, conflict: story.conflict, resolution: story.resolution, character: story.character, setting: story.setting, author: story.author }
+    })
+    res.send(returnStories)
   })
   .catch(err => {
     console.log(err.message)
@@ -53,7 +57,10 @@ const getUserStories = (req, res) => {
   const userId = req.params.userId;
   User.findById(userId).populate('stories')
     .then(user => {
-      res.send(user.stories);
+      const returnStories = user.stories.map((story) => {
+        return {id: story.id, genre: story.genre, plot: story.plot, conflict: story.conflict, resolution: story.resolution, character: story.character, setting: story.setting, author: story.author }
+      })
+      res.send(returnStories)
     })
     .catch(err => {
       console.log(err.message);
@@ -77,7 +84,9 @@ const getUserStory = (req, res) => {
          if (storyId !== userId) {
            return res.status(400).send("invalid path for story")
          }
-         res.send(story);
+
+         const returnStory = { id: story.id, genre: story.genre, plot: story.plot, conflict: story.conflict, resolution: story.resolution, character: story.character, setting: story.setting, author: story.author  }
+         res.send(returnStory)
        })
        .catch(err => {
          console.log(err.message);
