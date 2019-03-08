@@ -2,20 +2,24 @@
 
 The **Storyboarding API** allows the user to submit and find different concepts of stories for free. This API sends back JSON with important elements of a story such as plot, conflict, resolution and more.
 
+**Landing Page:**
+https://xisouyang.github.io/StoryboardingAPI/#/
 
 ## Getting Started
 
 These instructions will get help you make a call to the API to retrieve the information. See instructions for notes on how to request the project on your own personal project.
 
+**Base URL:** https://storyboarding-api.herokuapp.com/api
+
 ## Authentication
 
 Use [Postman](https://www.getpostman.com/) to *Sign In* and *Log In* to the API
 
-**POST URl:** __https://storyboarding-api.herokuapp.com/auth/sign-up__
+**POST URl:** __https://storyboarding-api.herokuapp.com/api/auth/sign-up__
 
 Sign up with a **username**, **password**, and **email**.
 
-**POST URl:** __https://storyboarding-api.herokuapp.com/auth/login__
+**POST URl:** __https://storyboarding-api.herokuapp.com/api/auth/login__
 
 Login with your **username** and **password**.
 
@@ -138,3 +142,19 @@ __https://storyboarding-api.herokuapp.com/api/users/:userId/stories/:id__
 | resolution  |    string    | The story resolution                                                  |
 | character   |    string    | The story characters                                                  |
 | setting     |    string    | The story setting                                                     |
+
+## Technologies
+
+* Node
+* Express
+* Mongoose
+* MongoDB
+
+## Author
+
+* **Stephen Ouyang** - initial work
+
+## Acknowledgments
+
+* Make School Staff, TAs and friends for assisting me on this project
+* My hobby of writing and reading fiction

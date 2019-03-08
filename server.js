@@ -53,8 +53,8 @@ var checkAuth = (req, res, next) => {
 
 // use routes
 app.use(checkAuth);
-app.use('/auth', authRoute)
-app.use('/', indexRoute)
+app.use('/api/auth', authRoute)
+app.use('/api', indexRoute)
 app.use('/api/users', storyRoute)
 
 // start up server
