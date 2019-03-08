@@ -102,7 +102,13 @@ const editUserStory = async(req, res) => {
      adminId = adminId.split('"').join('')
 
      if (userId === adminId) {
-       const story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+       const story = await Story.findOne({ _id: req.params.id }, req.body, { new: true })
+       story.genre = req.body.genre
+       story.plot = req.body.plot
+       story.conflict = req.body.conflict
+       story.resolution = req.body.resolution
+       story.character = req.body.character
+       story.setting = req.body.setting
        story.save()
        return res.send(`The Story Updated`).status(200)
      } else {
