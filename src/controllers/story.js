@@ -1,14 +1,14 @@
 const Story = require('../models/story')
 const User = require('../models/user')
 
-const checkLogin = (req, res, next) => {
-  if (req.user) {
-    next()
-  }
-  else {
-    res.status(400).send("Permission denied")
-  }
-}
+// const checkLogin = (req, res, next) => {
+//   if (req.user) {
+//     next()
+//   }
+//   else {
+//     res.status(400).send("Permission denied")
+//   }
+// }
 
 const postUserStory = (req, res) => {
   /*
@@ -29,7 +29,7 @@ const postUserStory = (req, res) => {
   })
 }
 
-const getAllStories = (req, res) => {
+const getAllStories = (req, res, next) => {
   /*
     Find all items in db using the Story schema
     then output it to terminal and client screen
@@ -48,7 +48,7 @@ const getAllStories = (req, res) => {
   })
 }
 
-const getUserStories = (req, res) => {
+const getUserStories = (req, res, next) => {
   /*
     Find all stories pertaining to one user
     and output it to terminal and client
@@ -159,7 +159,6 @@ const deleteUserStory = async(req, res) => {
 }
 
 module.exports = {
-   checkLogin,
    postUserStory,
    getAllStories,
    getUserStories,

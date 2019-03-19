@@ -28,6 +28,7 @@ app.use(expressValidator());
 //set db
 require('./src/data/customAPI-db')
 
+// create admin user
 require('./lib/admin')()
 
 // setup route controllers
@@ -36,20 +37,21 @@ const storyRoute = require('./src/routes/story')
 const authRoute = require('./src/routes/auth')
 
 // check validity of token
-var checkAuth = (req, res, next) => {
-  console.log("Checking authentication");
-  if (typeof req.headers['authorization'] === "undefined" || req.headers['authorization'] === null) {
-    console.log(req.headers['authorization'])
-    req.user = null;
-    console.log("FAIL")
-  } else {
-    console.log("SUCCESS")
-    var token = req.headers['authorization'];
-    var decodedToken = jwt.decode(token, { complete: true }) || {};
-    req.user = decodedToken.payload;
-  }
-  next();
-};
+// var checkAuth = (req, res, next) => {
+//   console.log("Checking authentication");
+//   if (typeof req.headers['authorization'] === "undefined" || req.headers['authorization'] === null) {
+//     console.log(req.headers['authorization'])
+//     req.user = null;
+//     console.log("FAIL")
+//   } else {
+//     console.log("SUCCESS")
+//     var token = req.headers['authorization'];
+//     var decodedToken = jwt.decode(token, { complete: true }) || {};
+//     req.user = decodedToken.payload;
+//   }
+//   next();
+// };
+var checkAuth = require('./src/middleware/checkAuth')
 
 // use routes
 app.use(checkAuth);
