@@ -8,9 +8,6 @@ const { getUserStory } = require('../controllers/story')
 const { postUserStory } = require('../controllers/story')
 const { editUserStory } = require('../controllers/story')
 const { deleteUserStory } = require('../controllers/story')
-// const { checkLogin } = require('../controllers/story')
-
-// router.use('*', checkLogin)
 
 router.get('/stories', getAllStories)
 router.get('/:userId/stories', checkLogin, getUserStories)

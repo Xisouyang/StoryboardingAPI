@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = function (req, res, next) {
   console.log("Checking authentication");
   if (typeof req.headers['authorization'] === "undefined" || req.headers['authorization'] === null) {
